@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:bull_run/app/shared/colors.dart';
-import 'package:bull_run/meta/views/auth/signup_view.dart';
+import 'package:bull_run/meta/utils/routs.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class SplashView extends StatefulWidget {
@@ -18,10 +16,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     Timer(
         Duration(seconds: 1),
-        () => Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: SignupView(), type: PageTransitionType.leftToRight)));
+        () => Navigator.pushReplacementNamed(context, MyRouts.signupRoute));
     super.initState();
   }
 
@@ -35,13 +30,21 @@ class _SplashViewState extends State<SplashView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Bull Run",
+              "TRADERS",
               style: TextStyle(
                   fontSize: 50, fontWeight: FontWeight.w900, color: whiteColor),
             ).shimmer(
-                primaryColor: Vx.yellow100,
+                primaryColor: Vx.cyan100,
                 secondaryColor: Colors.white,
-                duration: Duration(seconds: 3)),
+                duration: Duration(seconds: 1)),
+                 Text(
+              " JOURNAL",
+              style: TextStyle(
+                  fontSize: 50, fontWeight: FontWeight.w900, color: whiteColor),
+            ).shimmer(
+                primaryColor: Vx.blue100,
+                secondaryColor: Colors.white,
+                duration: Duration(seconds: 1)),
           ],
         ),
       ),
