@@ -1,128 +1,72 @@
+import 'package:bull_run/app/shared/colors.dart';
+import 'package:bull_run/meta/model/trades.dart';
+import 'package:bull_run/meta/views/home_screen/homeview_helper.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+const String dataBoxName = "data3";
 
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+enum DataFilter { ALL, COMPLETED, PROGRESS }
+
+class _MyHomePageState extends State<MyHomePage> {
+  double proftandloss = 0.0;
+  late Box<Trades> dataBox;
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  DataFilter filter = DataFilter.ALL;
+
+  @override
+  void dispose() {
+    Hive.close();
+
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dataBox = Hive.box<Trades>(dataBoxName);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Material(
-            elevation: 5,
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
-            child: Container(
-              height: MediaQuery.of(context).size.height * .3,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              decoration: BoxDecoration(
-                  color: Vx.randomColor,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: ['User Name'.text.make().p12()],
-                  ),
-                  Row(                  
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width * .35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Vx.randomColor),
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            alignment: WrapAlignment.spaceAround,
-                            children: [
-                              'Total Fund'.text.sm.make().pOnly(right: 10),
-                              'Rs 2 00 000'.text.xl.bold.make().pOnly(right: 10),
-                            ],
-                          ),
-                        ),
-                      ),
-                        Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width * .35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Vx.randomColor),
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            alignment: WrapAlignment.spaceAround,
-                            children: [
-                              'Monthly P/L'.text.sm.make().pOnly(right: 10),
-                              '+2000'.text.xl.bold.make().pOnly(right: 10),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                    Row(                  
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width * .35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Vx.randomColor),
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            alignment: WrapAlignment.spaceAround,
-                            children: [
-                              'Weekly P/L'.text.sm.make().pOnly(right: 10),
-                              '+2000'.text.xl.bold.make().pOnly(right: 10),
-                            ],
-                          ),
-                        ),
-                      ),
-                        Material(
-                        elevation: 2,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width * .35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                              color: Vx.randomColor),
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            alignment: WrapAlignment.spaceAround,
-                            children: [
-                              "Today's P/L".text.sm.make().pOnly(right: 10),
-                              '+2000'.text.xl.bold.make().pOnly(right: 10),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: bgColorFaint,
+        label: const Text('Buy'),
+        icon: const Icon(
+          FontAwesomeIcons.paperPlane,
+          color: Colors.green,
+        ),
+        onPressed: () {
+          Provider.of<HomeHelper>(context, listen: false).entryCard(context);
+        },
+      ),
+      body: Container(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        height: double.infinity,
+        decoration: BoxDecoration(color: bgColor),
+        child: Column(
+          children: [
+            // Provider.of<HomeHelper>(context, listen: false)
+            //          .topcards(context),
+            Provider.of<HomeHelper>(context,listen: false).topContainers(context),
+            Expanded(
+                child: Provider.of<HomeHelper>(context, listen: true)
+                    .displaytrades(context))
+          ],
+        ),
       ),
     );
   }
+  
 }

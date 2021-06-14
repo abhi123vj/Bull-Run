@@ -1,15 +1,13 @@
 import 'package:bull_run/app/shared/colors.dart';
 import 'package:bull_run/app/shared/dimensions.dart';
 import 'package:bull_run/meta/utils/routs.dart';
-import 'package:bull_run/meta/views/auth/signup_view.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginView extends StatelessWidget {
-  final passwordController = TextEditingController();
+    final passwordController = TextEditingController();
   final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -74,50 +72,52 @@ class LoginView extends StatelessWidget {
                 child: Column(
                   children: [
                     vSizedBox1,
-                    stylishTextField("Email", emailController),
+                    stylishTextField(
+                        "Email",
+                        emailController),
                     vSizedBox1,
-                    stylishTextField("Password", passwordController),
+                    stylishTextField(
+                        "Password",
+                        passwordController),
                   ],
                 ),
               ),
               vSizedBox4,
-              InkWell(
-                onTap: (){
-                  
-                },
-                child: AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: "Don't have an account?",
-                              style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                                fontFamily: "Montserrat",
-                              )),
-                          TextSpan(
-                              text: "Sign Up",
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushReplacementNamed(
-                                      context, MyRouts.signupRoute);
-                                },
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "Montserrat",
-                              ))
-                        ])),
-                        vSizedBox2,
-                        Container(
+              AnimatedContainer(
+                duration: Duration(seconds: 1),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "Don't have an account?",
+                            style: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              fontFamily: "Montserrat",
+                            )),
+                        TextSpan(
+                            text: "Sign Up",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacementNamed(
+                                    context, MyRouts.signupRoute);
+                              },
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Montserrat",
+                            ))
+                      ])),
+                      vSizedBox2,
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
                           width: 300,
                           height: 50,
                           decoration: BoxDecoration(
@@ -133,8 +133,8 @@ class LoginView extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               )

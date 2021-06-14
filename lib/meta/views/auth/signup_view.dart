@@ -1,12 +1,9 @@
 import 'package:bull_run/app/shared/colors.dart';
 import 'package:bull_run/app/shared/dimensions.dart';
 import 'package:bull_run/meta/utils/routs.dart';
-import 'package:bull_run/meta/views/auth/login_view.dart';
-import 'package:bull_run/meta/views/home_screen/home_view.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class SignupView extends StatelessWidget {
