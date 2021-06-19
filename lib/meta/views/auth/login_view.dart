@@ -2,13 +2,32 @@ import 'package:bull_run/app/shared/colors.dart';
 import 'package:bull_run/app/shared/dimensions.dart';
 import 'package:bull_run/meta/utils/routs.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginView extends StatelessWidget {
-    final passwordController = TextEditingController();
+  final passwordController = TextEditingController();
   final emailController = TextEditingController();
+
+  Future<void> loginuser() async {
+    await Firebase.initializeApp();
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,13 +91,9 @@ class LoginView extends StatelessWidget {
                 child: Column(
                   children: [
                     vSizedBox1,
-                    stylishTextField(
-                        "Email",
-                        emailController),
+                    stylishTextField("Email", emailController),
                     vSizedBox1,
-                    stylishTextField(
-                        "Password",
-                        passwordController),
+                    stylishTextField("Password", passwordController),
                   ],
                 ),
               ),
@@ -116,7 +131,10 @@ class LoginView extends StatelessWidget {
                       ])),
                       vSizedBox2,
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          loginuser();
+                          print("login called");
+                        },
                         child: Container(
                           width: 300,
                           height: 50,

@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final document = await getApplicationDocumentsDirectory();
   Hive.init(document.path);
-  
+
   Hive.registerAdapter(TradesAdapter());
   await Hive.openBox<Trades>(dataBoxName);
 
@@ -23,7 +23,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -37,6 +36,7 @@ class MyApp extends StatelessWidget {
             MyRouts.loginRoute: (context) => LoginView(),
             MyRouts.signupRoute: (context) => SignupView(),
             MyRouts.homeRoute: (context) => MyHomePage(),
+            MyRouts.landingPage: (context) => LandingPage(),
           },
         ),
         providers: [
