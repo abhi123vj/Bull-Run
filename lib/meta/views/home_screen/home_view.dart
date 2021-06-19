@@ -1,12 +1,10 @@
 import 'package:bull_run/app/shared/colors.dart';
 import 'package:bull_run/meta/model/trades.dart';
 import 'package:bull_run/meta/views/home_screen/homeview_helper.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 const String dataBoxName = "data3";
 
@@ -36,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     dataBox = Hive.box<Trades>(dataBoxName);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             // Provider.of<HomeHelper>(context, listen: false)
             //          .topcards(context),
-            Provider.of<HomeHelper>(context,listen: false).topContainers(context),
+            Provider.of<HomeHelper>(context, listen: false)
+                .topContainers(context),
             Expanded(
                 child: Provider.of<HomeHelper>(context, listen: true)
                     .displaytrades(context))
@@ -68,5 +67,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-  
 }

@@ -2,6 +2,8 @@ import 'package:bull_run/app/shared/colors.dart';
 import 'package:bull_run/app/shared/dimensions.dart';
 import 'package:bull_run/meta/utils/routs.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -11,6 +13,25 @@ class SignupView extends StatelessWidget {
 
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
+
+  Future<void> createuser() async {
+    await Firebase.initializeApp();
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: "barry.allen@example.com",
+              password: "SuperSecretPassword!");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,8 +138,9 @@ class SignupView extends StatelessWidget {
                       vSizedBox2,
                       InkWell(
                         onTap: () {
+                          createuser();
                           Navigator.pushReplacementNamed(
-                              context, MyRouts.homeRoute);
+                              context, MyRouts.loginRoute);
                         },
                         child: Container(
                           width: 300,

@@ -10,7 +10,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:ui' as ui;
 
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeHelper with ChangeNotifier {
@@ -20,8 +19,6 @@ class HomeHelper with ChangeNotifier {
   final TextEditingController stockNameController = TextEditingController();
   final TextEditingController stockPriceController = TextEditingController();
   final TextEditingController stockQtyController = TextEditingController();
-
- 
 
   entryCard(BuildContext context) {
     stockNameController.clear();
@@ -181,7 +178,6 @@ class HomeHelper with ChangeNotifier {
       child: ValueListenableBuilder(
         valueListenable: dataBox.listenable(),
         builder: (context, Box<Trades> items, _) {
-      
           keys = items.keys
               .cast<int>()
               .toList()
@@ -194,7 +190,7 @@ class HomeHelper with ChangeNotifier {
             itemBuilder: (_, index) {
               final int key = keys[index];
               final Trades? data = items.get(key);
-              
+
               return Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -496,7 +492,6 @@ class HomeHelper with ChangeNotifier {
       },
     );
   }
- 
 
   // // top of card
 
@@ -575,24 +570,26 @@ class HomeHelper with ChangeNotifier {
   //   print(details);
   // }
 
- Widget topContainers(BuildContext context){
+  Widget topContainers(BuildContext context) {
     return VxSwiper.builder(
-    itemCount: 10,
-    height: MediaQuery.of(context).size.height*.15,
-    itemBuilder: (context, index) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-         
-        ],
-      )
-         .box.rounded.alignCenter.color(Vx.randomPrimaryColor).make()
-         .p4().shimmer(
-           
+      itemCount: 10,
+      height: MediaQuery.of(context).size.height * .15,
+      itemBuilder: (context, index) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [],
+        )
+            .box
+            .rounded
+            .alignCenter
+            .color(Vx.randomPrimaryColor)
+            .make()
+            .p4()
+            .shimmer(
                 primaryColor: Vx.randomOpaqueColor,
                 secondaryColor: Vx.randomColor,
                 duration: Duration(seconds: 40));
-    },
-);
+      },
+    );
   }
 }
