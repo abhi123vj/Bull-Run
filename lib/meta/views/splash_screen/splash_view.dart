@@ -76,29 +76,29 @@ class LandingPage extends StatelessWidget {
         // Initialize FlutterFire:
         future: _intialization,
         builder: (context, snapshot) {
-          // if (islogged == true) {
-          //   return MyHomePage();
-          // }
-          // if (islogged == false) {
-          //   return SignupView();
-          // }
-          // Once complete, show your application
-          //if (snapshot.connectionState == ConnectionState.done) {
-          FirebaseAuth auth = FirebaseAuth.instance;
-          FirebaseAuth.instance.userChanges().listen((User? user) async {
-            await Firebase.initializeApp();
-            if (user == null) {
-              //print('User is signed out!');
-              return loginnot();
-            } else {
-              return loginfound();
-            }
-          });
           // Check for errors
           if (snapshot.hasError) {
             print("error found");
           }
-          // }
+          if (islogged == true) {
+            return MyHomePage();
+          }
+          if (islogged == false) {
+            return SignupView();
+          }
+          // Once complete, show your application
+          if (snapshot.connectionState == ConnectionState.done) {
+            FirebaseAuth auth = FirebaseAuth.instance;
+            FirebaseAuth.instance.userChanges().listen((User? user) async {
+              await Firebase.initializeApp();
+              if (user == null) {
+                //print('User is signed out!');
+                return loginnot();
+              } else {
+                return loginfound();
+              }
+            });
+          }
           print("returnd error");
           return Scaffold(
             body: Center(
