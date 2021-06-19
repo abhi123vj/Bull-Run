@@ -10,7 +10,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:ui' as ui;
 
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeHelper with ChangeNotifier {
@@ -20,8 +19,6 @@ class HomeHelper with ChangeNotifier {
   final TextEditingController stockNameController = TextEditingController();
   final TextEditingController stockPriceController = TextEditingController();
   final TextEditingController stockQtyController = TextEditingController();
-
- 
 
   entryCard(BuildContext context) {
     stockNameController.clear();
@@ -34,72 +31,76 @@ class HomeHelper with ChangeNotifier {
             filter: new ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
             child: Dialog(
                 backgroundColor: Colors.blueGrey[100],
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      TextFormField(
-                        textCapitalization: TextCapitalization.words,
-                        decoration: InputDecoration(
-                          labelText: 'Stock Name',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.building,
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        TextFormField(
+                          textCapitalization: TextCapitalization.words,
+                          decoration: InputDecoration(
+                            labelText: 'Stock Name',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(
+                              FontAwesomeIcons.building,
+                            ),
                           ),
+                          controller: stockNameController,
                         ),
-                        controller: stockNameController,
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: false),
-                        decoration: InputDecoration(
-                          labelText: 'Stock Price',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.coins,
+                        SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          decoration: InputDecoration(
+                            labelText: 'Stock Price',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(
+                              FontAwesomeIcons.coins,
+                            ),
                           ),
+                          controller: stockPriceController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r"[0-9.]")),
+                            TextInputFormatter.withFunction(
+                                (oldValue, newValue) {
+                              try {
+                                final text = newValue.text;
+                                if (text.isNotEmpty) double.parse(text);
+                                return newValue;
+                              } catch (e) {}
+                              return oldValue;
+                            }),
+                          ],
                         ),
-                        controller: stockPriceController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
-                          TextInputFormatter.withFunction((oldValue, newValue) {
-                            try {
-                              final text = newValue.text;
-                              if (text.isNotEmpty) double.parse(text);
-                              return newValue;
-                            } catch (e) {}
-                            return oldValue;
-                          }),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: false),
-                        decoration: InputDecoration(
-                          labelText: 'Stock Qty',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            EvaIcons.briefcaseOutline,
+                        SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          decoration: InputDecoration(
+                            labelText: 'Stock Qty',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(
+                              EvaIcons.briefcaseOutline,
+                            ),
                           ),
+                          controller: stockQtyController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+                          ],
                         ),
-                        controller: stockQtyController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      traderbutton(dataBox, context, "Buy")
-                    ],
+                        SizedBox(
+                          height: 16,
+                        ),
+                        traderbutton(dataBox, context, "Buy")
+                      ],
+                    ),
                   ),
                 )),
           );
@@ -181,7 +182,6 @@ class HomeHelper with ChangeNotifier {
       child: ValueListenableBuilder(
         valueListenable: dataBox.listenable(),
         builder: (context, Box<Trades> items, _) {
-      
           keys = items.keys
               .cast<int>()
               .toList()
@@ -194,7 +194,7 @@ class HomeHelper with ChangeNotifier {
             itemBuilder: (_, index) {
               final int key = keys[index];
               final Trades? data = items.get(key);
-              
+
               return Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -324,88 +324,93 @@ class HomeHelper with ChangeNotifier {
             filter: new ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
             child: Dialog(
                 backgroundColor: Colors.blueGrey[100],
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          traderbutton2(index, context, "Delete", textColor),
-                          traderbutton2(index, context, "Modify", Colors.blue),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        textCapitalization: TextCapitalization.words,
-                        decoration: InputDecoration(
-                          labelText: 'Stock Name',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.building,
-                          ),
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            traderbutton2(index, context, "Delete", textColor),
+                            traderbutton2(
+                                index, context, "Modify", Colors.blue),
+                          ],
                         ),
-                        controller: stockNameController,
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: false),
-                        decoration: InputDecoration(
-                          labelText: 'Stock Price',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            FontAwesomeIcons.coins,
-                          ),
+                        SizedBox(
+                          height: 16,
                         ),
-                        controller: stockPriceController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
-                          TextInputFormatter.withFunction((oldValue, newValue) {
-                            try {
-                              final text = newValue.text;
-                              if (text.isNotEmpty) double.parse(text);
-                              return newValue;
-                            } catch (e) {}
-                            return oldValue;
-                          }),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: false),
-                        decoration: InputDecoration(
-                          labelText: 'Stock Qty',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            EvaIcons.briefcaseOutline,
+                        TextFormField(
+                          textCapitalization: TextCapitalization.words,
+                          decoration: InputDecoration(
+                            labelText: 'Stock Name',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(
+                              FontAwesomeIcons.building,
+                            ),
                           ),
+                          controller: stockNameController,
                         ),
-                        controller: stockQtyController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          traderbutton2(index, context, "Buy", Colors.green),
-                          traderbutton2(index, context, "Sell", Colors.red),
-                        ],
-                      ),
-                    ],
+                        SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          decoration: InputDecoration(
+                            labelText: 'Stock Price',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(
+                              FontAwesomeIcons.coins,
+                            ),
+                          ),
+                          controller: stockPriceController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r"[0-9.]")),
+                            TextInputFormatter.withFunction(
+                                (oldValue, newValue) {
+                              try {
+                                final text = newValue.text;
+                                if (text.isNotEmpty) double.parse(text);
+                                return newValue;
+                              } catch (e) {}
+                              return oldValue;
+                            }),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          decoration: InputDecoration(
+                            labelText: 'Stock Qty',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(
+                              EvaIcons.briefcaseOutline,
+                            ),
+                          ),
+                          controller: stockQtyController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            traderbutton2(index, context, "Buy", Colors.green),
+                            traderbutton2(index, context, "Sell", Colors.red),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 )),
           );
@@ -425,8 +430,8 @@ class HomeHelper with ChangeNotifier {
       ),
       onPressed: () {
         if (text == "Delete") {
-          dataBox.get(keys[index])!.delete();
-          Navigator.pop(context);
+            dataBox.deleteAt(index);
+            Navigator.pop(context);
         } else if (text == "Modify") {
           if (stockNameController.text.isNotEmpty &&
               stockPriceController.text.isNotEmpty &&
@@ -496,7 +501,6 @@ class HomeHelper with ChangeNotifier {
       },
     );
   }
- 
 
   // // top of card
 
@@ -574,25 +578,86 @@ class HomeHelper with ChangeNotifier {
   //   details['Money in Stock'] = moneyInStock;
   //   print(details);
   // }
-
- Widget topContainers(BuildContext context){
+  var infos = {};
+  Widget topContainers(BuildContext context) {
+    readdata();
     return VxSwiper.builder(
-    itemCount: 10,
-    height: MediaQuery.of(context).size.height*.15,
-    itemBuilder: (context, index) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-         
-        ],
-      )
-         .box.rounded.alignCenter.color(Vx.randomPrimaryColor).make()
-         .p4().shimmer(
-           
-                primaryColor: Vx.randomOpaqueColor,
-                secondaryColor: Vx.randomColor,
-                duration: Duration(seconds: 40));
-    },
-);
+      itemCount: infos.length,
+      enlargeCenterPage: true,
+      height: MediaQuery.of(context).size.height * .15,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.only(left: 2, right: 2),
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: darkColor,
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                color: Colors.white,
+              )),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "${infos.entries.elementAt(index).key}",
+                style: TextStyle(color: textColor),
+              ),
+              Text(
+                "${infos.entries.elementAt(index).value}",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  readdata() {
+    
+    infos.clear();
+    print(dataBox.length);
+    double totalProfit = 0;
+    int beststock = 0;
+    int worststock = 0;
+
+    for (int i = 0; i < dataBox.length; i++) {
+      print("inside loop");
+      print(dataBox.getAt(i)!.profitandloss);
+      totalProfit = dataBox.getAt(i)!.profitandloss + totalProfit;
+      if (dataBox.getAt(i)!.profitandloss >
+          dataBox.getAt(beststock)!.profitandloss) beststock = i;
+      if (dataBox.getAt(i)!.profitandloss <
+          dataBox.getAt(worststock)!.profitandloss) worststock = i;
+    }
+    try {
+      if (totalProfit >= 0)
+        infos['Your Net Profit'] = "₹$totalProfit";
+      else
+        infos['Your Net Loss'] = "₹${totalProfit.abs()}";
+      if (dataBox.getAt(beststock)!.profitandloss >= 0)
+        infos['${dataBox.getAt(beststock)!.stockName} has given you Max Profit '] =
+            "₹${dataBox.getAt(beststock)!.profitandloss}";
+      else
+        infos['${dataBox.getAt(beststock)!.stockName} has given you Min Loss '] =
+            "₹${dataBox.getAt(beststock)!.profitandloss.abs()}";
+      if (dataBox.getAt(worststock)!.profitandloss >= 0)
+        infos['${dataBox.getAt(worststock)!.stockName} has given you Min Profit '] =
+            "₹${dataBox.getAt(worststock)!.profitandloss}";
+      else
+        infos['${dataBox.getAt(worststock)!.stockName} has given you Max Loss '] =
+            "₹${dataBox.getAt(worststock)!.profitandloss.abs()}";
+    } catch (e) {
+      if (infos.length == 0) {
+        print("erre $e");
+        infos['Start Buying Stocks'] = "";
+      }
+    }
+    print(infos);
   }
 }

@@ -2,6 +2,7 @@ import 'package:bull_run/meta/model/trades.dart';
 import 'package:bull_run/meta/utils/routs.dart';
 import 'package:bull_run/meta/views/auth/login_view.dart';
 import 'package:bull_run/meta/views/auth/signup_view.dart';
+import 'package:bull_run/meta/views/home_screen/home_header_helper.dart';
 import 'package:bull_run/meta/views/home_screen/home_view.dart';
 import 'package:bull_run/meta/views/home_screen/homeview_helper.dart';
 import 'package:bull_run/meta/views/splash_screen/splash_view.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (_) => HomeHelper(),
+          ),
+           ChangeNotifierProvider(
+            create: (_) => HomeHeaderHelper(),
           ),
         ]);
   }
