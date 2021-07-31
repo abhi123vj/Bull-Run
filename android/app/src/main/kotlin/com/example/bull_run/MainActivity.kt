@@ -1,4 +1,4 @@
-package com.example.bull_run
+package com.abhi.bull_run
 
 import io.flutter.embedding.android.FlutterActivity
 

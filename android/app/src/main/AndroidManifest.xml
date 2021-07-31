@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bull_run">
+    package="com.abhi.bull_run">
    <application
         android:label="bull_run"
         android:icon="@mipmap/ic_launcher">

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "188746736159",
-    "firebase_url": "https://developer-student-club-25afd.firebaseio.com",
-    "project_id": "developer-student-club-25afd",
-    "storage_bucket": "developer-student-club-25afd.appspot.com"
+    "project_number": "361264260434",
+    "firebase_url": "https://csic-app-2c303.firebaseio.com",
+    "project_id": "csic-app-2c303",
+    "storage_bucket": "csic-app-2c303.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:188746736159:android:38317240f4370f8174ab2a",
+        "mobilesdk_app_id": "1:361264260434:android:f55b4b3812bd019d34c68b",
         "android_client_info": {
-          "package_name": "com.example.bull_run"
+          "package_name": "com.abhi.bull_run"
         }
       },
       "oauth_client": [
         {
-          "client_id": "188746736159-ap50f0b7upvt70lb174g29657qo5k73b.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.bull_run",
-            "certificate_hash": "8f6e91ca71828b70828a571126cff1987996c951"
-          }
-        },
-        {
-          "client_id": "188746736159-e0jjgt727a02jpf30e3jgk2gjalnhvj7.apps.googleusercontent.com",
+          "client_id": "361264260434-jtlohvctd1buurl89l4lp4ofgmvpb3f2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB3tQ3FMXc3s10DDA2g2f5Juw5Pl40lTic"
+          "current_key": "AIzaSyAjyPEDXJkrpWI8-vA1ZMU_SAdbJnkOL30"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "188746736159-e0jjgt727a02jpf30e3jgk2gjalnhvj7.apps.googleusercontent.com",
+              "client_id": "361264260434-jtlohvctd1buurl89l4lp4ofgmvpb3f2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
